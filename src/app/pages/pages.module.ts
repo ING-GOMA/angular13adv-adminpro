@@ -4,13 +4,14 @@ import { ProgressComponent } from './progress/progress.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 
@@ -22,7 +23,8 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     PagesComponent,
     AccountSettingsComponent,
     PromesasComponent,
-    RxjsComponent
+    RxjsComponent,
+    PerfilComponent
   ],
   exports:[
     ProgressComponent,
@@ -36,6 +38,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
     CommonModule,
     FormsModule,
     ComponentsModule,
+    ReactiveFormsModule,
     SharedModule,
     RouterModule
   ]

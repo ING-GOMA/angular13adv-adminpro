@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
           Swal.fire('Error', err.error.msg, 'error');
         });
     
-    console.log(this.loginForm.value);
+    //console.log(this.loginForm.value);
     //this._router.navigateByUrl('/');
 
   }
