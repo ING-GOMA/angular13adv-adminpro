@@ -7,6 +7,7 @@ import { LoginForm } from '../interfaces/login-form.interface';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
+import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
 
 const base_url = environment.base_url;
 declare const gapi:any;
@@ -25,11 +26,18 @@ export class UsuarioService {
 
    get token(): string {
      return localStorage.getItem('token') || '';
-
    }
 
    get uid(): string{
      return this.usuario.uid || '';
+   }
+
+   get headers(){
+     return {
+      headers: {
+        'x-token': this.token
+      }
+     }
    }
 
   googleInit(){
@@ -106,11 +114,7 @@ export class UsuarioService {
       role: this.usuario.role || ''
     }
    
-    return this._http.put(`${ base_url }/usuarios/${ this.uid }`, data, {
-       headers: {
-          'x-token': this.token
-        }
-      });
+    return this._http.put(`${ base_url }/usuarios/${ this.uid }`, data, this.headers);
 
   }
 
@@ -134,4 +138,38 @@ export class UsuarioService {
     )
  
    }
+
+   cargarUsuarios( desde: number = 0 ){
+     
+    const url = `${base_url}/usuarios?desde=${ desde }`;
+//    return this._http.get<{ total:number, usuarios:Usuario[] }>(url, this.headers );
+    return this._http.get< CargarUsuario >(url, this.headers ).pipe(
+      map( resp =>{
+        const usuarios = resp.usuarios.map(
+          user => new Usuario( user.nombre, user.email, '', user.img, user.google,user.role,user.uid )
+        );
+
+        return {
+          total: resp.total,
+          usuarios
+        }        
+      } )
+    )
+
+   }
+
+   eliminarUsuario( usuario:Usuario ){
+
+      const url = `${base_url}/usuarios/${ usuario.uid }`;
+      return this._http.delete(url, this.headers );
+
+   }
+
+   guardarUsuario( usuario: Usuario){
+
+    return this._http.put(`${ base_url }/usuarios/${ usuario.uid }`, usuario, this.headers);
+
+   }
+
+
 }
