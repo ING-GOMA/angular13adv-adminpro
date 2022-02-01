@@ -69,10 +69,11 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     
     if ( termino.length === 0 ) {
       return this.usuarios = this.usuariosTemp;
+      //return this.cargarUsuarios();
     }
     
     this._busquedasService.buscar('usuarios', termino).subscribe( resultados => {
-      this.usuarios = resultados;
+      this.usuarios = resultados as Usuario[];
     } );
 
   }
@@ -113,7 +114,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
   }
 
   abrirModal( usuario:Usuario ){
-    console.log(usuario);
+    
     this._modalImagenService.abrirModal('usuarios',usuario.uid,usuario.img);
 
   }
